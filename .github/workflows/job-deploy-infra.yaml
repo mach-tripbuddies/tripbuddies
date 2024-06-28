@@ -12,7 +12,8 @@ on:
           - destroy
   workflow_call:
     inputs:
-        directory: 
+        TFAction: 
+            description: 'apply or destroy infra' 
             required: true
             type: string
     
@@ -73,4 +74,3 @@ jobs:
         run : |
           cd ${{ github.workspace }}/dev
           terraform destroy -auto-approve
-
