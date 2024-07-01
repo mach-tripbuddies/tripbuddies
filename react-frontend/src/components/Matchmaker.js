@@ -13,7 +13,7 @@ const Matchmaker = () => {
         params: {
           filters: {
             $and: [
-              { Name: { $contains: nameQuery } },
+              { state: { $contains: "Goa" } },
               { FoodChoice: { $contains: foodChoice } },
             ],
           },
@@ -26,6 +26,9 @@ const Matchmaker = () => {
       console.error('Error fetching data from Strapi:', error);
     }
   };
+
+
+  
 
   return (
     <div>

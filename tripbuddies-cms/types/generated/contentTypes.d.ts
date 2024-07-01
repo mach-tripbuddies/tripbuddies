@@ -927,7 +927,7 @@ export interface ApiTripTrip extends Schema.CollectionType {
       'manyToOne',
       'api::agency.agency'
     >;
-    Category: Attribute.Enumeration<['bike', 'backpack']> & Attribute.Required;
+    Category: Attribute.Enumeration<['Bike', 'Backpack']> & Attribute.Required;
     RegisteredUsers: Attribute.Component<'regusers.registeredusers', true>;
     duration: Attribute.Integer;
     cost: Attribute.Integer & Attribute.Required;
@@ -989,6 +989,9 @@ export interface ApiTripTrip extends Schema.CollectionType {
           'Entry Fees to Monuments and Palaces'
         ]
       >;
+    startdate: Attribute.DateTime;
+    Itinerary: Attribute.Blocks;
+    enddate: Attribute.DateTime & Attribute.Unique;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

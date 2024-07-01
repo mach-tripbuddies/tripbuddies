@@ -40,8 +40,8 @@
     "Category": {
       "type": "enumeration",
       "enum": [
-        "bike",
-        "backpack"
+        "Bike",
+        "Backpack"
       ],
       "required": true
     },
@@ -117,6 +117,16 @@
         "Entry Fees to Monuments and Palaces"
       ],
       "customField": "plugin::multi-select.multi-select"
+    },
+    "startdate": {
+      "type": "datetime"
+    },
+    "Itinerary": {
+      "type": "blocks"
+    },
+    "enddate": {
+      "type": "datetime",
+      "unique": true
     }
   }
 }
