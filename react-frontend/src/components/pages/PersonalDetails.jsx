@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import '../../styles/style.css';
 import * as Yup from 'yup';
 
@@ -8,8 +8,8 @@ const PersonalDetails = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const [trip, setTrip] = useState('');
     const [address, setAddress] = useState('');
-    const [fullName, setFullName] = user.displayName;
-    const [email, setEmail] = user.email;
+    const [fullName, setfullName] = useState(user.displayName);
+    const [email, setEmail] = useState(user.email);
     const [zipcode, setZipcode] = useState('');
     const [gender, setGender] = useState('');
     //const [phone, setPhone] = localStorage.getItem('mobile');
@@ -22,7 +22,7 @@ const PersonalDetails = () => {
     const handleSubmit = (values) => {
         values.preventDefault();
         const personalInfo = {
-            fullname: values.fullname,
+            fullName: values.fullName,
             email: values.email,
             gender: values.gender,
             address: values.address,
@@ -34,7 +34,7 @@ const PersonalDetails = () => {
         navigateTo('/confirmation', { state: { personalInfo} });
     };
     const validationSchema = Yup.object().shape({
-        fullname: Yup.string()
+        fullName: Yup.string()
             .min(2, 'Full name must be at least 2 characters')
             .required('Full name is required'),
         email: Yup.string()
@@ -64,7 +64,6 @@ const PersonalDetails = () => {
     ];
     return (
         <Formik
-            initialValues={{ fullname: '', email: '', gender: '', address: '', zipcode: '', phone: '', state: '', country: '' }}
             validationSchema={validationSchema}
      /*       onSubmit={(values, { setSubmitting }) => {
                 axios.post('https://your-server-endpoint.com/api/submit', values)
@@ -98,8 +97,9 @@ const PersonalDetails = () => {
                             value={fullName}
                             disabled={true}
                         />
-                        <ErrorMessage name="fullname" component="div" className="error" />
+                        <ErrorMessage name="fullName" component="div" className="error" />
                     </div>
+
                             <div>
                         <label htmlFor="email">Email:</label>
                         <input
@@ -107,7 +107,6 @@ const PersonalDetails = () => {
                             id="email"
                             value={email}
                             disabled={true}
-                            required
                         />
                     </div>
                             <div>
@@ -117,7 +116,6 @@ const PersonalDetails = () => {
                                     id="phone"
                                     value={phone}
                                     disabled={true}
-                                    required
                                 />
                             </div>
                             <div>
