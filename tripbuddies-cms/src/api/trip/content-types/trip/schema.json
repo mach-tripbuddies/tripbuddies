@@ -127,6 +127,18 @@
     "enddate": {
       "type": "datetime",
       "unique": true
+    },
+    "activities": {
+      "type": "customField",
+      "options": [
+        "Cruises",
+        "Paragliding",
+        "River rafting",
+        "Scuba diving",
+        "Trekking",
+        ""
+      ],
+      "customField": "plugin::multi-select.multi-select"
     }
   }
 }

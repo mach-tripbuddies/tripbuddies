@@ -992,6 +992,18 @@ export interface ApiTripTrip extends Schema.CollectionType {
     startdate: Attribute.DateTime;
     Itinerary: Attribute.Blocks;
     enddate: Attribute.DateTime & Attribute.Unique;
+    activities: Attribute.JSON &
+      Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        [
+          'Cruises',
+          'Paragliding',
+          'River rafting',
+          'Scuba diving',
+          'Trekking',
+          ''
+        ]
+      >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
