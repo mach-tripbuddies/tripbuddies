@@ -2,12 +2,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.createCheckoutSession = async (req, res) => {
     let x = (req.body.metadata);
-    //const y = x.metadata.name;
    console.log("value of x");
    console.log(x);
 
-    //console.log("value of y");
-    //console.log(y);
     try {
         const session = await stripe.checkout.sessions.create({
 
@@ -26,8 +23,8 @@ exports.createCheckoutSession = async (req, res) => {
             ],
             allow_promotion_codes: true,
             mode: 'payment',
-            success_url: 'http://localhost:5173/success',
-            cancel_url: 'http://localhost:5173/cancel',
+            success_url: '${process.env.CLIENT_URL}/success',
+            cancel_url: '${process.env.CLIENT_URL}/cancel',
         });
 
         res.json({ id: session.id });
