@@ -8,6 +8,7 @@ on:
     - main
     paths:
     - 'react-frontend/**'
+    
 
 jobs:
   pr-validation-react:

@@ -1,16 +1,4 @@
 services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    environment:
-      - POSTGRES_PASSWORD=postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
-    networks:
-      - backend
-
   account-service:
     container_name: account-service 
     build:
@@ -25,7 +13,6 @@ services:
     networks:
       - backend
     depends_on:
-      - postgres
       - tripbuddies-service-registry
 
   checkout-service:
@@ -42,7 +29,6 @@ services:
     networks:
       - backend
     depends_on:
-      - postgres
       - tripbuddies-service-registry
 
   identity-service:
@@ -76,7 +62,6 @@ services:
     networks:
       - backend
     depends_on:
-      - postgres
       - tripbuddies-service-registry
 
   tripbuddies-gateway:

@@ -1,11 +1,25 @@
 name: PR validation template
 
 on: 
+  workflow_dispatch:
+    inputs:
+      directory:
+        description: choose a directory
+        required: true
+        type: choice
+        options:
+          - "springboot"
+          - "react"
+          - "iac"
   workflow_call:
     inputs:
         directory: 
             required: true
             type: string
+permissions:
+  id-token: write
+  contents: read
+
 
 jobs: 
     validate-springboot: 
@@ -49,4 +63,67 @@ jobs:
           run: |
             cd ${{ github.workspace }}/react-frontend 
             CI=false npm run build
+
+    validate-cms: 
+        if: inputs.directory == 'cms'
+        runs-on: ubuntu-latest
+
+        steps: 
+        - name: checkout
+          uses: actions/checkout@v4
         
+        - name: Set up Node.js
+          uses: actions/setup-node@v4
+          with: 
+            node-version: '20.x'
+
+        - name: install npm dependencies
+          run: | 
+            cd ${{ github.workspace }}/tripbuddies-cms
+            npm install --legacy-peer-deps
+
+        - name: build travel-buddies react project
+          run: |
+            cd ${{ github.workspace }}/tripbuddies-cms
+            CI=false npm run build
+        
+    validate-iac:
+        if: inputs.directory == 'iac'
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: IAC/
+        env: 
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID:  ${{ secrets.AZURE_TENANT_ID }}
+          ARM_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+
+        steps:
+        - name: checkout
+          uses: actions/checkout@v4
+
+        - name: Azure login
+          uses: azure/login@v2
+          with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+            tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+            subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+        - name: Check if storage account exists
+          run: |
+            chmod +x deploy-storage-account.sh
+            ./deploy-storage-account.sh
+      
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2.0.3
+      
+        - name: Terraform Init
+          run: |
+            cd dev/ 
+            terraform init
+          
+        - name: Terraform Validate
+          run: |
+            cd dev/
+            terraform validate

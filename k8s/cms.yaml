@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi-cms
+  labels: 
+    app: strapi-cms
+    component: cms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi-cms
+  template:
+    metadata:
+      labels:
+        app: strapi-cms
+    spec:
+      containers:
+      - name: strapi
+        image: tripbuddies.azurecr.io/tripbuddies-cms:latest
+        ports:
+        - containerPort: 1337
+        envFrom:
+        - configMapRef:
+            name: tripbuddies-cm

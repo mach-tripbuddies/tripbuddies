@@ -1,0 +1,27 @@
+name: Deploy infra and services
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-infra:
+    uses: ./.github/workflows/job-deploy-infra.yaml
+    secrets: inherit
+    with:
+      TFAction: apply
+
+  push-images:
+    uses: ./.github/workflows/job-push-images.yaml
+    secrets: inherit
+    needs: [deploy-infra]
+
+  deploy-k8s: 
+    uses: ./.github/workflows/job-deploy-k8s.yaml
+    secrets: inherit
+    needs: [push-images]
