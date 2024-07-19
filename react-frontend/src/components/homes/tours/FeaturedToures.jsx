@@ -86,9 +86,6 @@ export default function FeaturedToures() {
                         <Stars star={elm.rating} />
                       </div>
 
-                      <span className="text-dark-1 ml-10">
-                        {elm.rating} ({elm.ratingCount})
-                      </span>
                     </div>
                   </div>
 
