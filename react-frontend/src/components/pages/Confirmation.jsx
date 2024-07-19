@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/style.css';
 import { useLocation } from 'react-router-dom';
 
-const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
+const Confirmation = () => {
     const navigate = useNavigate();
     const finalTripTitle = tripTitle;
     const date = "19/07/2024";
