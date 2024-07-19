@@ -14,7 +14,6 @@ export default function Header3() {
   console.log("during reload", token)
 
 
-  // Add a class to the element when scrolled 50px
   const handleScroll = () => {
     if (window.scrollY >= 50) {
       setAddClass(true);
@@ -31,7 +30,6 @@ export default function Header3() {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

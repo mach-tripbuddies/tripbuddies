@@ -10,7 +10,6 @@ const dmsans = DM_Sans({
   subsets: ["latin"],
   display: "swap",
 });
-// const inter = Inter({ subsets: ["latin"] });
 if (typeof window !== "undefined") {
   import("bootstrap");
 }

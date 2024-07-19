@@ -193,7 +193,6 @@ export const reviews = [
       "/img/Trips-1.jpg",
     ],
   },
-  // More review objects can be added to this array
 ];
 
 export const times = [

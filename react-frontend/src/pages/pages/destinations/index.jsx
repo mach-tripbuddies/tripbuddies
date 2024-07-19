@@ -17,7 +17,6 @@ const metadata = {
 export default function DestinationsPage() {
   let params = useParams();
   const activity = params.activity;
-  // const tour = allTour.find((item) => item.id == id) || allTour[0];
 console.log(activity)
   return (
     <>

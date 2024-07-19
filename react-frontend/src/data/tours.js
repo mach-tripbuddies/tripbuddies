@@ -95,7 +95,6 @@ export const tourData = [
     spead: "Steady",
     feature: "Food",
   },
-  // Add more tour objects here...
 ];
 
 export const tourDataTwo = [

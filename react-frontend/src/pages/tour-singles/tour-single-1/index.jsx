@@ -19,7 +19,6 @@ export default function TourSinglePage1() {
   let params = useParams();
   const id = params.id;
   const tour = allTour.find((item) => item.id == id) || allTour[0];
-  // console.log(tour)
   return (
     <>
       <MetaComponent meta={metadata} />
