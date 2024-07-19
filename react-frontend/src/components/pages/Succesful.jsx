@@ -22,16 +22,10 @@ export default function Succesful() {
                 <section className="nopage mt-header">
                     <div className="container">
                         <div className="row y-gap-30 justify-between items-center">
-                            <div className="col-xl-6 col-lg-6">
-                                <img src="/img/404.svg" alt="image" />
-                            </div>
-
-                            <div className="col-xl-5 col-lg-6">
+                            <div className="col-xl-12 col-lg-12 items-center">
                                 <div className="nopage__content pr-30 lg:pr-0">
-                                    <h1>
-                                        40<span className="text-accent-1">4</span>
-                                    </h1>
-                                    <h2 className="text-30 md:text-24 fw-700">
+                                    <img src="/img/check.png" alt="image" />
+                                    <h2 className="text-40">
                                         Payment Sucessful
                                     </h2>
                                     <p>
