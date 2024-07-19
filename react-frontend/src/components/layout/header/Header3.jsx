@@ -12,7 +12,6 @@ export default function Header3() {
   const token = localStorage.getItem('token');
 
 
-  // Add a class to the element when scrolled 50px
   const handleScroll = () => {
     if (window.scrollY >= 50) {
       setAddClass(true);

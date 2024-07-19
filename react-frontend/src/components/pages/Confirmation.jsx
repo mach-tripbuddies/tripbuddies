@@ -4,7 +4,6 @@ import '../../styles/style.css';
 
 const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
     const navigate = useNavigate();
-    //const tripTitle = localStorage.getItem("tripTitle");
     const finalTripTitle = tripTitle;
     const date = "19/07/2024";
     const tripDuration = duration;

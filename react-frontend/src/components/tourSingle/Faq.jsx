@@ -29,7 +29,6 @@ export default function Faq(tourData) {
 
   console.log(questionsAndAnswers)
   console.log(tourData.tourData.attributes.queries)
-// if(tourData.tourData.attributes.queries)
 {tourData.tourData.attributes.queries.map((elm, i) => {
   // Log the text content
   console.log(elm.children[0].text);

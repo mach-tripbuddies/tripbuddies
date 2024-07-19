@@ -19,7 +19,6 @@ export default function TourListPage1() {
 
   let params = useParams();
   const title = params.title;
-  // console.log(title)
   useEffect(() => {
     const fetchTours = async () => {
       try {
@@ -33,7 +32,6 @@ export default function TourListPage1() {
           },
         });        
         setTourData(response.data.data);
-// console.log(tourData)
       } catch (error) {
         console.error("Error fetching data from Strapi:", error);
       }
