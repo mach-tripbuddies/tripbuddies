@@ -34,16 +34,16 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                             <form onSubmit={handleSubmit} className="booking-form">
                                 <div>
                                     <label htmlFor="Trip"> Trip:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="tripTitle"
-                                        value={tripTitle}
+                                        value={finalTripTitle}
                                         readOnly
                                     />
                                 </div>
                                 <div>
                                     <label htmlFor="date">Date:</label>
-                                    <input
+                                    <input className="br1"
                                         type="date"
                                         id="date"
                                         value="2021/07/07"
@@ -52,7 +52,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="tripDuration">Trip Duration::</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="tripDuration"
                                         value={tripDuration}
@@ -62,7 +62,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="tripCost">Trip Cost :</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="tripCost"
                                         value={tripCost}
@@ -72,7 +72,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="fullName">Full Name:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="fullName"
                                         value={personalInfo.fullName}
@@ -81,7 +81,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="address">Address:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="address"
                                         value={personalInfo.address}
@@ -90,7 +90,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="zipcode">zipcode:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="zipcode"
                                         value={personalInfo.zipcode}
@@ -99,7 +99,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="state">state:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="state"
                                         value={personalInfo.state}
@@ -108,7 +108,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="country">country:</label>
-                                    <input
+                                    <input className="br1"
                                         type="text"
                                         id="country"
                                         value={personalInfo.country}
@@ -118,7 +118,7 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
                                 </div>
                                 <div>
                                     <label htmlFor="members">No of members:</label>
-                                    <select id="members" value={members} onChange={(e) => setMembers(e.target.value)} required>
+                                    <select id="members"  className="br1" value={members} onChange={(e) => setMembers(e.target.value)} required>
                                         <option value="">Select no of Members for trip(max 3)</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>

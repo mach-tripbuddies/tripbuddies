@@ -91,7 +91,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                         <form onSubmit={handleSubmit} className="booking-form">
                             <div>
                         <label htmlFor="fullName"> Full Name:</label>
-                        <input
+                        <input className="br1"
                             type="text"
                             id="fullName"
                             value={fullName}
@@ -102,7 +102,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
 
                             <div>
                         <label htmlFor="email">Email:</label>
-                        <input
+                        <input className="br1"
                             type="email"
                             id="email"
                             value={email}
@@ -111,16 +111,16 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                     </div>
                             <div>
                                 <label htmlFor="phone">Mobile No:</label>
-                                <input
+                                <input className="br1"
                                     type="phone"
                                     id="phone"
-                                    value={phone}
+                                    value="9123456789"
                                     disabled={true}
                                 />
                             </div>
                             <div>
                                 <label htmlFor="gender">Select Gender:</label>
-                                <select id="gender" value={gender} onChange={(e) => setGender(e.target.value)} required>
+                                <select id="gender"  className="br1" value={gender} onChange={(e) => setGender(e.target.value)} required>
                                     <option value="">Select a Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -129,7 +129,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                             </div>
                             <div>
                         <label htmlFor="address">Address:</label>
-                        <input
+                        <input className="br1"
                             type="text"
                             id="address"
                             value={address}
@@ -139,7 +139,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                     </div>
                             <div>
                         <label htmlFor="zipcode">zipcode:</label>
-                        <input
+                        <input className="br1"
                             type="text"
                             id="zipcode"
                             value={zipcode}
@@ -149,7 +149,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                     </div>
                             <div>
                                 <label htmlFor="state">Select State:</label>
-                                <select id="state" value={state} onChange={(e) => setState(e.target.value)} required>
+                                <select id="state" className="br1" value={state} onChange={(e) => setState(e.target.value)} required>
                                     {statesAndUTsOfIndia.map(state => (
                                         <option key={state} value={state} label={state} />
                                     ))}
@@ -157,7 +157,7 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
                             </div>
                             <div>
                         <label htmlFor="country">country:</label>
-                        <input
+                        <input className="br1"
                             type="text"
                             id="country"
                             value={country}
