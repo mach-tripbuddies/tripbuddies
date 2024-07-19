@@ -17,14 +17,19 @@ const CheckoutForm = ({ tripCost, finalTripTitle}) => {
             card: elements.getElement(CardElement),
         });
 
-        if (!error) {
-             const response = await fetch(`${__STRIPE_CLIENT_URL__}`+'/api/stripe/create-checkout-session', {
-                        //const response = await fetch('http://localhost:4242/api/stripe/create-checkout-ses
+        try {
+            const response = await fetch(`${__STRIPE_CLIENT_URL__}`+'/api/stripe/create-checkout-session', {
                 method: 'POST',
-                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' ,'Set-Cookie': 'promo_shown=1; SameSite=Strict'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Set-Cookie': 'promo_shown=1; SameSite=Strict'
+                },
                 body: JSON.stringify({ paymentMethod }),
             });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
             const session = await response.json();
             const result = await stripe.redirectToCheckout({ sessionId: session.id });
@@ -32,9 +37,8 @@ const CheckoutForm = ({ tripCost, finalTripTitle}) => {
             if (result.error) {
                 console.log(result.error.message);
             }
-
-        } else {
-            console.error(error.message);
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
