@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/style.css';
+import { useLocation } from 'react-router-dom';
 
 const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
     const navigate = useNavigate();
@@ -10,6 +11,9 @@ const Confirmation = (personalInfo, totalTripCost, tripTitle, duration) => {
     const tripCost = totalTripCost;
     const [members, setMembers] = useState('');
     const navigateTo = useNavigate();
+    const location = useLocation();
+
+    const { personalInfo, totalTripCost, tripTitle, duration } = location.state || {};
 
     const handleSubmit = (values) => {
         // Simulate a successful payment
