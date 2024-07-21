@@ -1,56 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Formik, ErrorMessage } from 'formik';
 import '../../styles/style.css';
-import * as Yup from 'yup';
 
-const PersonalDetails = (totalTripCost, tripTitle, duration) => {
+const PersonalDetails = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const [trip, setTrip] = useState('');
-    const [address, setAddress] = useState('');
-    const [fullName, setfullName] = useState(user.displayName);
+    const [fullName, setFullName] = useState(user.displayName);
     const [email, setEmail] = useState(user.email);
-    const [zipcode, setZipcode] = useState('');
+    const [phone, setPhone] = useState('9123456789');
     const [gender, setGender] = useState('');
-    //const [phone, setPhone] = localStorage.getItem('mobile');
-    const [phone, setPhone] = "9123456789";
+    const [address, setAddress] = useState('');
+    const [zipcode, setZipcode] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    //const [personalInfo, setPersonalInfo] = useState({ fullName, address, email, gender, zipcode, phone, state, country});
-    //const history = useHistory();
     const navigateTo = useNavigate();
-    const handleSubmit = (values) => {
-        values.preventDefault();
+    const totalTripCost =7030;
+    const tripTitle ='Goa';
+    const duration =3;
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
         const personalInfo = {
-            fullName: values.fullName,
-            email: values.email,
-            gender: values.gender,
-            address: values.address,
-            zipcode: values.zipcode,
-            phone: values.phone,
-            state: values.state,
-            country: values.country
+            fullName,
+            email,
+            gender,
+            address,
+            zipcode,
+            phone,
+            state,
+            country
         };
-        navigateTo('/confirmation', { state: { personalInfo, totalTripCost, tripTitle, duration} });
+        navigateTo('/confirmation', { state: { personalInfo, totalTripCost, tripTitle, duration } });
     };
-    const validationSchema = Yup.object().shape({
-        fullName: Yup.string()
-            .min(2, 'Full name must be at least 2 characters')
-            .required('Full name is required'),
-        email: Yup.string()
-            .email('Invalid email address')
-            .required('Email is required'),
-        address: Yup.string()
-            .min(5, 'Address must be at least 5 characters')
-            .required('Address is required'),
-        zipcode: Yup.string()
-            .matches(/^[0-9]{5}$/, 'Zip code must be exactly 5 digits')
-            .required('Zip code is required'),
-        country: Yup.string()
-            .required('Country is required'),
-        state: Yup.string()
-            .required('State is required')
-    });
 
     const statesAndUTsOfIndia = [
         "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -62,119 +42,120 @@ const PersonalDetails = (totalTripCost, tripTitle, duration) => {
         "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Lakshadweep",
         "Delhi", "Puducherry", "Ladakh", "Jammu and Kashmir"
     ];
-    return (
-        <Formik
-            validationSchema={validationSchema}
-     /*       onSubmit={(values, { setSubmitting }) => {
-                axios.post('https://your-server-endpoint.com/api/submit', values)
-                    .then(response => {
-                        console.log('Form submitted successfully:', response.data);
-                        setSubmitting(false);
-                    })
-                    .catch(error => {
-                        console.error('There was an error submitting the form:', error);
-                        setSubmitting(false);
-                    });
-            }}*/
-        >
-    <section className="layout-pt-md layout-pb-lg mt-header">
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-8">
-                    <div className="booking-page">
-                        <div className="bg-light rounded-12 shadow-2 py-15 px-20">
-                    <h2 className="text-30 md:text-24 fw-700 mb-30">
-                        Book Your Trip Now!!!
-                    </h2>
-                </div>
-                        <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
-                        <form onSubmit={handleSubmit} className="booking-form">
-                            <div>
-                        <label htmlFor="fullName"> Full Name:</label>
-                        <input className="br1"
-                            type="text"
-                            id="fullName"
-                            value={fullName}
-                            disabled={true}
-                        />
-                        <ErrorMessage name="fullName" component="div" className="error" />
-                    </div>
 
-                            <div>
-                        <label htmlFor="email">Email:</label>
-                        <input className="br1"
-                            type="email"
-                            id="email"
-                            value={email}
-                            disabled={true}
-                        />
-                    </div>
-                            <div>
-                                <label htmlFor="phone">Mobile No:</label>
-                                <input className="br1"
-                                    type="phone"
-                                    id="phone"
-                                    value="9123456789"
-                                    disabled={true}
-                                />
+    return (
+        <section className="layout-pt-md layout-pb-lg mt-header">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="booking-page">
+                            <div className="bg-light rounded-12 shadow-2 py-15 px-20">
+                                <h2 className="text-30 md:text-24 fw-700 mb-30">
+                                    Book Your Trip Now!!!
+                                </h2>
                             </div>
-                            <div>
-                                <label htmlFor="gender">Select Gender:</label>
-                                <select id="gender"  className="br1" value={gender} onChange={(e) => setGender(e.target.value)} required>
-                                    <option value="">Select a Gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="nonbinary">Non-Binary</option>
-                                </select>
+                            <div className="bg-white rounded-12 shadow-2 py-30 px-30 md:py-20 md:px-20 mt-30">
+                                <form onSubmit={handleSubmit} className="booking-form">
+                                    <div>
+                                        <label htmlFor="fullName">Full Name:</label>
+                                        <input
+                                            className="br1"
+                                            type="text"
+                                            id="fullName"
+                                            value={fullName}
+                                            disabled={true}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email">Email:</label>
+                                        <input
+                                            className="br1"
+                                            type="email"
+                                            id="email"
+                                            value={email}
+                                            disabled={true}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="phone">Mobile No:</label>
+                                        <input
+                                            className="br1"
+                                            type="text"
+                                            id="phone"
+                                            value={phone}
+                                            disabled={true}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="gender">Select Gender:</label>
+                                        <select
+                                            id="gender"
+                                            className="br1"
+                                            value={gender}
+                                            onChange={(e) => setGender(e.target.value)}
+                                            required
+                                        >
+                                            <option value="">Select a Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="nonbinary">Non-Binary</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="address">Address:</label>
+                                        <input
+                                            className="br1"
+                                            type="text"
+                                            id="address"
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="zipcode">Zipcode:</label>
+                                        <input
+                                            className="br1"
+                                            type="text"
+                                            id="zipcode"
+                                            value={zipcode}
+                                            onChange={(e) => setZipcode(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="state">Select State:</label>
+                                        <select
+                                            id="state"
+                                            className="br1"
+                                            value={state}
+                                            onChange={(e) => setState(e.target.value)}
+                                            required
+                                        >
+                                            {statesAndUTsOfIndia.map(state => (
+                                                <option key={state} value={state}>{state}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="country">Country:</label>
+                                        <input
+                                            className="br1"
+                                            type="text"
+                                            id="country"
+                                            value={country}
+                                            onChange={(e) => setCountry(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <button type="submit">Proceed to Booking Confirmation</button>
+                                </form>
                             </div>
-                            <div>
-                        <label htmlFor="address">Address:</label>
-                        <input className="br1"
-                            type="text"
-                            id="address"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            required
-                        />
-                    </div>
-                            <div>
-                        <label htmlFor="zipcode">zipcode:</label>
-                        <input className="br1"
-                            type="text"
-                            id="zipcode"
-                            value={zipcode}
-                            onChange={(e) => setZipcode(e.target.value)}
-                            required
-                        />
-                    </div>
-                            <div>
-                                <label htmlFor="state">Select State:</label>
-                                <select id="state" className="br1" value={state} onChange={(e) => setState(e.target.value)} required>
-                                    {statesAndUTsOfIndia.map(state => (
-                                        <option key={state} value={state} label={state} />
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                        <label htmlFor="country">country:</label>
-                        <input className="br1"
-                            type="text"
-                            id="country"
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
-                            required
-                        />
-                    </div>
-                            <button type="submit" onClick={handleSubmit}>Proceed to Booking Confirmation</button>
-                        </form>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</Formik>
-
+        </section>
     );
 };
 

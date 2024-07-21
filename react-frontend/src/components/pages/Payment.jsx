@@ -1,58 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from './CheckoutForm'; // Assuming CheckoutForm is in the same directory
+import { useNavigate, useLocation } from 'react-router-dom';
+// Load Stripe with your public key
 const stripePromise = loadStripe('pk_test_51PNGQQP7uV08NbFwBTjw5xHkFaCY3E8x98Vr0eeXolNS9Ti0Vvyx2ps4EgoCga9WXpRSsToGPBnD63xssVcK9FSG00YT9OvQ1w');
 
-const CheckoutForm = ({ tripCost, finalTripTitle}) => {
-    const stripe = useStripe();
-    const elements = useElements();
-    const navigateTo = useNavigate();
+const Payment = () => {
+    const [clientSecret, setClientSecret] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { totalTripCost, tripTitle } = location.state || {};
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    if (!totalTripCost) {
+        return <p>No totalTripCost information received.</p>;
+    }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: 'card',
-            card: elements.getElement(CardElement),
-        });
-
-        try {
-            const response = await fetch(`${__STRIPE_CLIENT_URL__}`+'/api/stripe/create-checkout-session', {
+    console.log("--------", totalTripCost);
+    useEffect(() => {
+        const createPaymentIntent = async () => {
+            const res = await fetch(`${__STRIPE_CLIENT_URL__}`+'/api/stripe/create-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Set-Cookie': 'promo_shown=1; SameSite=Strict'
                 },
-                body: JSON.stringify({ paymentMethod }),
+                body: JSON.stringify({
+                    productCost: 6678, // Example amount in cents
+                    productValue: 'Goa',
+                }),
             });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (!res.ok) {
+                const error = await res.json();
+                console.error(error.error);
+                return;
             }
 
-            const session = await response.json();
-            const result = await stripe.redirectToCheckout({ sessionId: session.id });
+            const data = await res.json();
+            setClientSecret(data.clientSecret);
+        };
 
-            if (result.error) {
-                console.log(result.error.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        createPaymentIntent();
+    }, []);
+
+    const options = {
+        clientSecret,
+        appearance: {
+            /*...*/
+        },
     };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button type="submit" disabled={!stripe}>
-                Pay
-            </button>
-        </form>
-    );
-};
-
-const Payment = ({ bookingDetails }) => {
     return (
         <section className="layout-pt-md layout-pb-lg mt-header">
             <div className="container">
@@ -69,9 +66,11 @@ const Payment = ({ bookingDetails }) => {
                     <div className="payment-page">
                         <div className="row y-gap-30 contactForm pt-30">
                             <div className="col-12">
-                                <Elements stripe={stripePromise}>
-                                    <CheckoutForm bookingDetails={bookingDetails} />
-                                </Elements>
+                                {clientSecret && (
+                                    <Elements stripe={stripePromise} options={options}>
+                                        <CheckoutForm clientSecret={clientSecret} />
+                                    </Elements>
+                                )}
                             </div>
                         </div>
                     </div>
