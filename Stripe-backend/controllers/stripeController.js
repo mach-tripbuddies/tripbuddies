@@ -2,25 +2,37 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.createCheckoutSession = async (req, res) => {
     console.log('Request body:', req.body);
+    const { productCost, productValue } = req.body;
+
+    if (!productCost || !productValue) {
+        return res.status(400).send({ error: 'Missing required parameters: productCost or productValue' });
+    }
     try {
-        const { productCost, productValue } = req.body;
+        const session = await stripe.checkout.sessions.create({
 
-        if (!productCost || !productValue) {
-            return res.status(400).send({ error: 'Missing required parameters: productCost or productValue' });
-        }
-
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: productCost, // Amount in the smallest currency unit (e.g., cents)
-            currency: 'inr',
-            description: productValue,
+            payment_method_types: ['card'],
+            line_items: [
+                {
+                    price_data: {
+                        currency: 'inr',
+                        product_data: {
+                            name: 'Goa',
+                        },
+                        unit_amount: 703000,
+                    },
+                    quantity: 1,
+                },
+            ],
+            allow_promotion_codes: true,
+            mode: 'payment',
+            success_url: `${process.env.CLIENT_URL}/success`,
+            cancel_url: `${process.env.CLIENT_URL}/cancel`,
         });
 
-        res.send({
-            clientSecret: paymentIntent.client_secret,
-        });
+        res.json({ id: session.id });
     } catch (error) {
-        console.error('Error creating PaymentIntent:', error);
-        res.status(500).send({ error: error.message });
+        console.log(error);
+        res.status(500).send(`Error: ${error.message}`);
     }
 };
 
